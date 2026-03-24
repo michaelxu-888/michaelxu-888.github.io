@@ -87,18 +87,18 @@
             100% { transform: translateY(-12px); }
         }
 
-        /* 头像/Logo 预留位 */
+        /* 头像/Logo 完美圆形裁剪 */
         .avatar {
             width: 90px;
             height: 90px;
             margin: 0 auto 20px auto;
             border-radius: 50%;
-            background: linear-gradient(135deg, #1e293b, #0f172a);
+            object-fit: cover;
+            object-position: center;
             border: 2px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
-            background-image: url('https://i.postimg.cc/cL7sNS42/6201781842143284779.jpg'); /* Removal link：https://postimg.cc/delete/P9ytfq2q/056449db */
-            background-size: cover;
-            background-position: center;
+            background: #1e293b; 
+            display: block;
         }
 
         /* 在线状态指示灯 */
@@ -112,7 +112,7 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: 12px;
             color: #a1a1aa;
-            margin-bottom: 30px; /* 加大了这里的间距，因为去掉了技能标签 */
+            margin-bottom: 30px;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
@@ -244,7 +244,7 @@
     <div class="viewport">
         <div class="card">
             
-            <div class="avatar reveal-item delay-1"></div>
+            <img src="https://i.postimg.cc/cL7sNS42/6201781842143284779.jpg" alt="Michael Xu" class="avatar reveal-item delay-1">
 
             <h1 class="reveal-item delay-1">Michael Xu</h1>
             <p class="bio reveal-item delay-2">Mechatronics Engineer | Temasek Poly</p>
