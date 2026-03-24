@@ -99,10 +99,10 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             position: relative;
-            overflow: hidden; /* 🚨 确保扫光不会溢出卡片的圆角 */
+            overflow: hidden; 
         }
 
-        /* 🌟 卡片定期扫光特效 */
+        /* 🌟 卡片定期扫光特效 (已减速) */
         .card::before {
             content: '';
             position: absolute;
@@ -117,14 +117,14 @@
                 rgba(255, 255, 255, 0) 100%
             );
             transform: skewX(-25deg);
-            animation: cardShine 7s infinite; /* 每 7 秒触发一次 */
+            animation: cardShine 8s infinite; /* 总周期改为 8 秒 */
             pointer-events: none;
             z-index: 10;
         }
 
         @keyframes cardShine {
-            0%, 75% { left: -150%; } /* 前 75% 的时间静止等待 */
-            90% { left: 150%; }     /* 在 15% 的时间里快速扫过 */
+            0%, 70% { left: -150%; } /* 前 70% 的时间在左侧等待 */
+            95% { left: 150%; }     /* 扫过的时间拉长到了 25% (约 2 秒)，速度变得更加缓慢优雅 */
             100% { left: 150%; }
         }
 
@@ -302,7 +302,8 @@
                     <span class="dot"></span> Online
                 </div>
 
-                <a href="./contact.vcf" class="contact-btn reveal-item delay-3">SAVE CONTACT</a>
+                <a href="data:text/vcard;charset=utf-8,BEGIN%3AVCARD%0AVERSION%3A3.0%0AFN%3AXu%20Botian%0ATEL%3BTYPE%3DCELL%3A%2B6586089767%0AEND%3AVCARD" download="Xu_Botian.vcf" class="contact-btn reveal-item delay-3">SAVE CONTACT</a>
+                
                 <a href="https://www.instagram.com/michael_xu828/" target="_blank" class="ig-btn reveal-item delay-4">INSTAGRAM</a>
                 <a href="https://wa.me/6586089767" target="_blank" class="wa-btn reveal-item delay-5">WHATSAPP</a>
                 <a href="https://t.me/michael828xu" target="_blank" class="tg-btn reveal-item delay-6">TELEGRAM</a>
