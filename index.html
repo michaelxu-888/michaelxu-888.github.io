@@ -24,7 +24,6 @@
             text-align: center;
             overflow: hidden;
             position: relative;
-            /* 加上这行，防止访客点击背景时出现高亮闪烁 */
             -webkit-tap-highlight-color: transparent; 
         }
 
@@ -100,7 +99,33 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             position: relative;
-            transform-style: preserve-3d; 
+            overflow: hidden; /* 🚨 确保扫光不会溢出卡片的圆角 */
+        }
+
+        /* 🌟 卡片定期扫光特效 */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.15) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: skewX(-25deg);
+            animation: cardShine 7s infinite; /* 每 7 秒触发一次 */
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @keyframes cardShine {
+            0%, 75% { left: -150%; } /* 前 75% 的时间静止等待 */
+            90% { left: 150%; }     /* 在 15% 的时间里快速扫过 */
+            100% { left: 150%; }
         }
 
         /* 智能问候语 */
@@ -117,7 +142,6 @@
             font-weight: 700;
             opacity: 0;
             pointer-events: none;
-            transform: translateZ(30px); 
         }
 
         .greeting.show {
@@ -125,10 +149,10 @@
         }
 
         @keyframes greetFadeInOut {
-            0% { opacity: 0; transform: translateZ(30px) translateY(10px); }
-            15% { opacity: 1; transform: translateZ(30px) translateY(0); }
-            80% { opacity: 1; transform: translateZ(30px) translateY(0); }
-            100% { opacity: 0; transform: translateZ(30px) translateY(-10px); }
+            0% { opacity: 0; transform: translateY(10px); }
+            15% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
         }
 
         /* 头像/Logo */
@@ -143,7 +167,6 @@
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
             background: #1e293b; 
             display: block;
-            transform: translateZ(40px); 
         }
 
         /* 名字与简介 */
@@ -158,7 +181,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 4px 20px rgba(255,255,255,0.1);
-            transform: translateZ(20px);
         }
 
         .bio {
@@ -169,7 +191,6 @@
             font-weight: 400;
             letter-spacing: 1.5px;
             min-height: 20px; 
-            transform: translateZ(20px);
         }
 
         /* 动态打字机光标 */
@@ -201,7 +222,6 @@
             color: #a1a1aa;
             margin-bottom: 14px; 
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transform: translateZ(15px);
         }
 
         .dot {
@@ -236,9 +256,9 @@
             font-weight: 700; font-size: 14px; letter-spacing: 1px;
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative; overflow: hidden; z-index: 1;
-            transform: translateZ(20px); 
         }
 
+        /* 按钮自身的悬停扫光 */
         a::after {
             content: ''; position: absolute;
             top: 0; left: -100%; width: 50%; height: 100%;
@@ -254,9 +274,9 @@
         .in-btn { background: #0077b5; box-shadow: 0 4px 15px rgba(0, 119, 181, 0.2); }
         .cv-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); }
 
-        a:hover { transform: translateZ(30px) translateY(-3px) scale(1.02); }
+        a:hover { transform: translateY(-3px) scale(1.02); }
         .contact-btn:hover { box-shadow: 0 10px 30px rgba(217, 70, 239, 0.6); }
-        a:active { transform: translateZ(10px) translateY(1px) scale(0.98); }
+        a:active { transform: translateY(1px) scale(0.98); }
     </style>
 </head>
 <body>
@@ -268,7 +288,7 @@
 
     <div class="viewport">
         <div class="floating-wrapper">
-            <div class="card" data-tilt data-tilt-max="4" data-tilt-speed="2000" data-tilt-glare="true" data-tilt-max-glare="0.1" data-tilt-gyroscope="true" data-tilt-gyroscope-max-angle-x="15" data-tilt-gyroscope-max-angle-y="15">
+            <div class="card">
                 
                 <div class="greeting" id="smart-greeting"></div>
 
@@ -292,24 +312,8 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
-
     <script>
-        // --- 1. 苹果 iOS 陀螺仪解锁逻辑 ---
-        // 苹果系统需要用户有一次真实交互才能读取晃动数据
-        if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-            document.body.addEventListener('click', function() {
-                DeviceOrientationEvent.requestPermission()
-                    .then(permissionState => {
-                        if (permissionState === 'granted') {
-                            // 授权成功，晃动开始生效
-                        }
-                    })
-                    .catch(console.error);
-            }, { once: true }); // once: true 确保只会请求一次，不会反复弹窗
-        }
-
-        // --- 2. 智能问候语 ---
+        // --- 1. 智能问候语 ---
         document.addEventListener('DOMContentLoaded', () => {
             const hour = new Date().getHours();
             let greeting = "Good Evening";
@@ -327,7 +331,7 @@
             }, 1000);
         });
 
-        // --- 3. 动态打字机特效 (已减速) ---
+        // --- 2. 动态打字机特效 ---
         const bioText = "Mechatronics Engineer | Temasek Poly";
         const typewriterEl = document.getElementById('typewriter-text');
         let typeIndex = 0;
@@ -336,14 +340,13 @@
             if (typeIndex < bioText.length) {
                 typewriterEl.textContent += bioText.charAt(typeIndex);
                 typeIndex++;
-                // 🚨 打字速度从 40 减缓到了 90
                 setTimeout(typeWriter, 90); 
             }
         }
         
         setTimeout(typeWriter, 1200);
 
-        // --- 4. 尘埃粒子流背景 ---
+        // --- 3. 尘埃粒子流背景 ---
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particlesArray = [];
