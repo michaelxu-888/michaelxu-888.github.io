@@ -15,7 +15,8 @@
         body {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            /* 🌟 核心修复：使用 100dvh (Dynamic Viewport Height) 完美避开苹果底部导航栏 */
+            min-height: 100dvh; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -74,7 +75,7 @@
             background: rgba(20, 20, 25, 0.6);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
-            padding: 35px 30px; /* 🚨 缩小了上下内边距 */
+            padding: 30px 25px; /* 🌟 进一步缩减卡片内边距 */
             border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -89,9 +90,9 @@
 
         /* 头像/Logo 完美圆形裁剪 */
         .avatar {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 15px auto; /* 微调了头像下边距 */
+            width: 80px; /* 🌟 头像稍微调小一点点 */
+            height: 80px;
+            margin: 0 auto 12px auto; 
             border-radius: 50%;
             object-fit: cover;
             object-position: center;
@@ -112,7 +113,7 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: 12px;
             color: #a1a1aa;
-            margin-bottom: 16px; /* 🚨 缩小了状态灯下方的空间 */
+            margin-bottom: 14px; /* 🌟 缩减状态灯下方间距 */
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
@@ -135,7 +136,7 @@
         h1 {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
-            font-size: 34px;
+            font-size: 30px; /* 🌟 标题稍微缩小一点，配合整体比例 */
             font-weight: 800;
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -148,8 +149,8 @@
         .bio {
             font-family: 'Space Grotesk', sans-serif;
             color: #94a3b8;
-            font-size: 14px;
-            margin: 8px 0 12px 0; /* 🚨 缩小了文字下方的空间 */
+            font-size: 13px; /* 🌟 简介字体微调 */
+            margin: 6px 0 10px 0; 
             font-weight: 400;
             letter-spacing: 1.5px;
         }
@@ -178,13 +179,13 @@
         a {
             font-family: 'Montserrat', sans-serif;
             display: block;
-            margin: 10px 0; /* 🚨 稍微缩小了按钮之间的间距 */
-            padding: 14px; /* 🚨 稍微压扁了一点点按钮，省出更多空间 */
+            margin: 8px 0; /* 🌟 收紧按钮间距 */
+            padding: 13px; /* 🌟 收紧按钮高度 */
             color: white;
             text-decoration: none;
             border-radius: 16px;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 14px; /* 🌟 按钮字体微调 */
             letter-spacing: 1px;
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
