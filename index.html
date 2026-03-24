@@ -3,50 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My NFC Card</title>
+    <title>Michael's NFC Card</title>
     <style>
+        /* 动态渐变背景 */
         body {
-            font-family: Arial, sans-serif;
-            background: #0f172a;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #0f2027, #203a43);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             color: white;
             text-align: center;
-            padding: 40px;
         }
+
+        /* 背景动画关键帧 */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 毛玻璃卡片设计 (Glassmorphism) */
         .card {
-            max-width: 400px;
-            margin: auto;
-            background: #1e293b;
-            padding: 20px;
-            border-radius: 20px;
+            width: 85%;
+            max-width: 380px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px 30px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            /* 卡片入场动画 */
+            animation: slideUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            opacity: 0;
+            transform: translateY(30px);
         }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 名字与简介排版 */
         h1 {
-            margin-bottom: 10px;
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
+
+        .bio {
+            color: #94a3b8;
+            font-size: 15px;
+            margin: 12px 0 32px 0;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* 按钮设计 */
         a {
             display: block;
             margin: 10px 0;
-            padding: 12px;
-            background: #38bdf8;
-            color: black;
+            padding: 16px;
+            color: white;
             text-decoration: none;
-            border-radius: 10px;
-            font-weight: bold;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
+
+        /* Instagram 专属渐变色 */
+        .ig-btn {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        /* 悬停/点击交互效果 */
         a:hover {
-            background: #0ea5e9;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(220, 39, 67, 0.4);
+        }
+        
+        a:active {
+            transform: translateY(1px);
         }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h1>你的名字</h1>
-    <p>你的简介（比如：Student / Maker）</p>
+    <h1>Michael</h1>
+    <p class="bio">Temasek Poly Graduate 🎓</p>
 
-    <a href="https://instagram.com/你的账号">Instagram</a>
-    <a href="https://tiktok.com/@你的账号">TikTok</a>
-    <a href="https://wa.me/你的号码">WhatsApp</a>
-    <a href="mailto:你的邮箱">Email</a>
+    <a href="https://www.instagram.com/michael_xu828/" target="_blank" class="ig-btn">Instagram</a>
 </div>
 
 </body>
