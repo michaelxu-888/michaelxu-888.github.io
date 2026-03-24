@@ -19,14 +19,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #050505; /* 深邃纯黑底色 */
+            background-color: #050505; 
             color: white;
             text-align: center;
             overflow: hidden;
             position: relative;
         }
 
-        /* 影视级暗角 (Vignette) - 让视觉强制聚焦中心 */
+        /* 影视级暗角 (Vignette) */
         body::after {
             content: '';
             position: absolute;
@@ -36,7 +36,7 @@
             z-index: 10;
         }
 
-        /* 环境光晕 (Ambient Orbs) - 模拟赛博朋克霓虹背光 */
+        /* 环境光晕 */
         .glow-orb {
             position: absolute;
             border-radius: 50%;
@@ -53,7 +53,7 @@
             100% { transform: translate(30px, 50px) scale(1.2); }
         }
 
-        /* 电影镜头推拉与迷焦 (Rack Focus & Dolly-in) */
+        /* 电影镜头推拉与迷焦 */
         .viewport {
             width: 100%;
             display: flex;
@@ -101,7 +101,7 @@
             background-position: center;
         }
 
-        /* 求职/在线状态指示灯 */
+        /* 在线状态指示灯 */
         .status {
             display: inline-flex;
             align-items: center;
@@ -112,7 +112,7 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: 12px;
             color: #a1a1aa;
-            margin-bottom: 20px;
+            margin-bottom: 30px; /* 加大了这里的间距，因为去掉了技能标签 */
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
@@ -131,7 +131,7 @@
             100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
-        /* 名字与简介 (字体优化) */
+        /* 名字与简介 */
         h1 {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
@@ -154,28 +154,7 @@
             letter-spacing: 1.5px;
         }
 
-        /* 技能标签组 */
-        .skills {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 30px;
-        }
-
-        .tag {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 11px;
-            padding: 5px 12px;
-            border-radius: 8px;
-            background: rgba(56, 189, 248, 0.1);
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* 瀑布流动画类 */
+        /* 瀑布流动画类 (细化了层级) */
         .reveal-item {
             opacity: 0;
             transform: translateY(20px);
@@ -183,20 +162,22 @@
         }
 
         .delay-1 { animation-delay: 0.4s; }
-        .delay-2 { animation-delay: 0.6s; }
-        .delay-3 { animation-delay: 0.8s; }
-        .delay-4 { animation-delay: 1.0s; }
-        .delay-5 { animation-delay: 1.2s; }
+        .delay-2 { animation-delay: 0.5s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.7s; }
+        .delay-5 { animation-delay: 0.8s; }
+        .delay-6 { animation-delay: 0.9s; }
+        .delay-7 { animation-delay: 1.0s; }
 
         @keyframes revealUp {
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 按钮通用设计与影视级流光特效 */
+        /* 按钮通用设计与扫光特效 */
         a {
             font-family: 'Montserrat', sans-serif;
             display: block;
-            margin: 14px 0;
+            margin: 12px 0;
             padding: 16px;
             color: white;
             text-decoration: none;
@@ -210,7 +191,6 @@
             z-index: 1;
         }
 
-        /* 扫光特效 (Light Sweep) */
         a::after {
             content: '';
             position: absolute;
@@ -227,6 +207,14 @@
             background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
             box-shadow: 0 4px 15px rgba(220, 39, 67, 0.2);
         }
+        .wa-btn {
+            background: linear-gradient(45deg, #128C7E, #25D366);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2);
+        }
+        .tg-btn {
+            background: linear-gradient(45deg, #0088cc, #2AABEE);
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.2);
+        }
         .in-btn {
             background: #0077b5;
             box-shadow: 0 4px 15px rgba(0, 119, 181, 0.2);
@@ -237,11 +225,14 @@
             backdrop-filter: blur(10px);
         }
 
-        /* 悬停交互 */
+        /* 悬停交互阴影发光 */
         a:hover { transform: translateY(-3px) scale(1.02); }
         .ig-btn:hover { box-shadow: 0 10px 30px rgba(220, 39, 67, 0.5); }
+        .wa-btn:hover { box-shadow: 0 10px 30px rgba(37, 211, 102, 0.5); }
+        .tg-btn:hover { box-shadow: 0 10px 30px rgba(0, 136, 204, 0.5); }
         .in-btn:hover { box-shadow: 0 10px 30px rgba(0, 119, 181, 0.5); }
         .cv-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.4); box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1); }
+        
         a:active { transform: translateY(1px) scale(0.98); }
     </style>
 </head>
@@ -259,20 +250,18 @@
             <p class="bio reveal-item delay-2">Mechatronics Engineer | Temasek Poly</p>
 
             <div class="status reveal-item delay-2">
-                <span class="dot"></span> Open to Opportunities
-            </div>
-
-            <div class="skills reveal-item delay-3">
-                <span class="tag">SolidWorks</span>
-                <span class="tag">Robotics</span>
-                <span class="tag">IoT</span>
+                <span class="dot"></span> Online
             </div>
 
             <a href="https://www.instagram.com/michael_xu828/" target="_blank" class="ig-btn reveal-item delay-3">INSTAGRAM</a>
             
-            <a href="https://www.linkedin.com/in/botian-xu-4337b9231/" target="_blank" class="in-btn reveal-item delay-4">LINKEDIN</a>
+            <a href="https://wa.me/+65 8608 9767" target="_blank" class="wa-btn reveal-item delay-4">WHATSAPP</a>
+            
+            <a href="https://t.me/+65 8608 9767" target="_blank" class="tg-btn reveal-item delay-5">TELEGRAM</a>
+            
+            <a href="https://www.linkedin.com/in/botian-xu-4337b9231/" target="_blank" class="in-btn reveal-item delay-6">LINKEDIN</a>
 
-            <a href="https://drive.google.com/file/d/1sG8a6GSy7HkzB0sjHuRIFqA5UyB1nK-O/view?usp=sharing" target="_blank" class="cv-btn reveal-item delay-5">VIEW RESUME</a>
+            <a href="https://drive.google.com/file/d/1sG8a6GSy7HkzB0sjHuRIFqA5UyB1nK-O/view?usp=sharing" target="_blank" class="cv-btn reveal-item delay-7">VIEW RESUME</a>
         </div>
     </div>
 
