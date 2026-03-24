@@ -154,7 +154,7 @@
             letter-spacing: 1.5px;
         }
 
-        /* 瀑布流动画类 (细化了层级) */
+        /* 瀑布流动画类 */
         .reveal-item {
             opacity: 0;
             transform: translateY(20px);
@@ -168,7 +168,7 @@
         .delay-5 { animation-delay: 0.8s; }
         .delay-6 { animation-delay: 0.9s; }
         .delay-7 { animation-delay: 1.0s; }
-        .delay-8 { animation-delay: 1.1s; } /* 新增了 delay-8 以适应多出的按钮 */
+        .delay-8 { animation-delay: 1.1s; } 
 
         @keyframes revealUp {
             to { opacity: 1; transform: translateY(0); }
@@ -204,11 +204,15 @@
         a:hover::after { left: 150%; }
 
         /* 各个按钮的专属涂装 */
+        
+        /* 🚨 修改了这里的联系人按钮样式 🚨 */
         .contact-btn {
-            /* 使用与背景主色调呼应的科技蓝渐变，突出首要操作 */
-            background: linear-gradient(45deg, #0284c7, #38bdf8);
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+            background: linear-gradient(45deg, #8b5cf6, #d946ef); /* 霓虹紫到紫红的渐变 */
+            box-shadow: 0 4px 15px rgba(217, 70, 239, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2); /* 微微的白边增加立体感 */
+            letter-spacing: 2px; /* 字距稍微拉开一点，显得更高级 */
         }
+        
         .ig-btn {
             background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
             box-shadow: 0 4px 15px rgba(220, 39, 67, 0.2);
@@ -233,7 +237,7 @@
 
         /* 悬停交互阴影发光 */
         a:hover { transform: translateY(-3px) scale(1.02); }
-        .contact-btn:hover { box-shadow: 0 10px 30px rgba(56, 189, 248, 0.5); }
+        .contact-btn:hover { box-shadow: 0 10px 30px rgba(217, 70, 239, 0.6); } /* 强化悬停时的发光 */
         .ig-btn:hover { box-shadow: 0 10px 30px rgba(220, 39, 67, 0.5); }
         .wa-btn:hover { box-shadow: 0 10px 30px rgba(37, 211, 102, 0.5); }
         .tg-btn:hover { box-shadow: 0 10px 30px rgba(0, 136, 204, 0.5); }
@@ -260,7 +264,7 @@
                 <span class="dot"></span> Online
             </div>
 
-            <a href="data:text/vcard;charset=utf-8,BEGIN%3AVCARD%0AVERSION%3A3.0%0AFN%3AMichael%20Xu%0ATITLE%3AMechatronics%20Engineer%0AORG%3ATemasek%20Poly%0ATEL%3BTYPE%3DCELL%3A%2B6586089767%0AEND%3AVCARD" download="Michael_Xu.vcf" class="contact-btn reveal-item delay-3">SAVE CONTACT</a>
+            <a href="data:text/vcard;charset=utf-8,BEGIN%3AVCARD%0AVERSION%3A3.0%0AFN%3AXu%20Botian%0ATEL%3BTYPE%3DCELL%3A%2B6586089767%0AEND%3AVCARD" download="Xu_Botian.vcf" class="contact-btn reveal-item delay-3">SAVE CONTACT</a>
 
             <a href="https://www.instagram.com/michael_xu828/" target="_blank" class="ig-btn reveal-item delay-4">INSTAGRAM</a>
             
