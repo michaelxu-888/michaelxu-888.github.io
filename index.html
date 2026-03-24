@@ -24,6 +24,8 @@
             text-align: center;
             overflow: hidden;
             position: relative;
+            /* 加上这行，防止访客点击背景时出现高亮闪烁 */
+            -webkit-tap-highlight-color: transparent; 
         }
 
         /* 影视级暗角 (Vignette) */
@@ -76,7 +78,7 @@
             100% { transform: scale(1); filter: blur(0) brightness(1); }
         }
 
-        /* 包装器：处理原本的上下浮动，避免和 3D Tilt 冲突 */
+        /* 包装器：处理原本的上下浮动 */
         .floating-wrapper {
             width: 85%;
             max-width: 380px;
@@ -88,17 +90,17 @@
             100% { transform: translateY(-12px); }
         }
 
-        /* 极致毛玻璃卡片 (加入了 3D 悬浮的宿主) */
+        /* 极致毛玻璃卡片 */
         .card {
             background: rgba(20, 20, 25, 0.6);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
-            padding: 40px 25px 30px 25px; /* 顶部多留一点空间给问候语 */
+            padding: 40px 25px 30px 25px; 
             border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             position: relative;
-            transform-style: preserve-3d; /* 开启 3D 子元素效果 */
+            transform-style: preserve-3d; 
         }
 
         /* 智能问候语 */
@@ -115,10 +117,9 @@
             font-weight: 700;
             opacity: 0;
             pointer-events: none;
-            transform: translateZ(30px); /* 3D 悬浮在卡片上方 */
+            transform: translateZ(30px); 
         }
 
-        /* 问候语出现的动画 */
         .greeting.show {
             animation: greetFadeInOut 4s cubic-bezier(0.19, 1, 0.22, 1) forwards;
         }
@@ -142,7 +143,7 @@
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
             background: #1e293b; 
             display: block;
-            transform: translateZ(40px); /* 让头像在 3D 倾斜时更突出 */
+            transform: translateZ(40px); 
         }
 
         /* 名字与简介 */
@@ -167,7 +168,7 @@
             margin: 6px 0 10px 0; 
             font-weight: 400;
             letter-spacing: 1.5px;
-            min-height: 20px; /* 防止打字前高度塌陷 */
+            min-height: 20px; 
             transform: translateZ(20px);
         }
 
@@ -235,7 +236,7 @@
             font-weight: 700; font-size: 14px; letter-spacing: 1px;
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative; overflow: hidden; z-index: 1;
-            transform: translateZ(20px); /* 按钮在 3D 模式下悬浮 */
+            transform: translateZ(20px); 
         }
 
         a::after {
@@ -267,13 +268,14 @@
 
     <div class="viewport">
         <div class="floating-wrapper">
-            <div class="card" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.15">
+            <div class="card" data-tilt data-tilt-max="4" data-tilt-speed="2000" data-tilt-glare="true" data-tilt-max-glare="0.1" data-tilt-gyroscope="true" data-tilt-gyroscope-max-angle-x="15" data-tilt-gyroscope-max-angle-y="15">
                 
                 <div class="greeting" id="smart-greeting"></div>
 
                 <img src="https://i.postimg.cc/cL7sNS42/6201781842143284779.jpg" alt="Michael Xu" class="avatar reveal-item delay-1">
 
                 <h1 class="reveal-item delay-1">Michael Xu</h1>
+                
                 <p class="bio reveal-item delay-2"><span id="typewriter-text"></span><span class="cursor"></span></p>
 
                 <div class="status reveal-item delay-2">
@@ -293,7 +295,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
 
     <script>
-        // --- 1. 智能问候语逻辑 ---
+        // --- 1. 苹果 iOS 陀螺仪解锁逻辑 ---
+        // 苹果系统需要用户有一次真实交互才能读取晃动数据
+        if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+            document.body.addEventListener('click', function() {
+                DeviceOrientationEvent.requestPermission()
+                    .then(permissionState => {
+                        if (permissionState === 'granted') {
+                            // 授权成功，晃动开始生效
+                        }
+                    })
+                    .catch(console.error);
+            }, { once: true }); // once: true 确保只会请求一次，不会反复弹窗
+        }
+
+        // --- 2. 智能问候语 ---
         document.addEventListener('DOMContentLoaded', () => {
             const hour = new Date().getHours();
             let greeting = "Good Evening";
@@ -306,13 +322,12 @@
             const greetingEl = document.getElementById('smart-greeting');
             greetingEl.textContent = greeting;
             
-            // 延迟 1 秒后显示（配合整体入场动画），然后会自动消失（CSS控制）
             setTimeout(() => {
                 greetingEl.classList.add('show');
             }, 1000);
         });
 
-        // --- 2. 动态打字机特效 ---
+        // --- 3. 动态打字机特效 (已减速) ---
         const bioText = "Mechatronics Engineer | Temasek Poly";
         const typewriterEl = document.getElementById('typewriter-text');
         let typeIndex = 0;
@@ -321,14 +336,14 @@
             if (typeIndex < bioText.length) {
                 typewriterEl.textContent += bioText.charAt(typeIndex);
                 typeIndex++;
-                setTimeout(typeWriter, 40); // 打字速度，越小越快
+                // 🚨 打字速度从 40 减缓到了 90
+                setTimeout(typeWriter, 90); 
             }
         }
         
-        // 等待整个卡片滑入（约1.2秒）后再开始打字
         setTimeout(typeWriter, 1200);
 
-        // --- 3. 微弱尘埃粒子流背景 ---
+        // --- 4. 尘埃粒子流背景 ---
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particlesArray = [];
@@ -344,9 +359,9 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 1.5; // 粒子极小，增加克制感
-                this.speedY = Math.random() * -0.5 - 0.2; // 缓慢向上漂浮
-                this.opacity = Math.random() * 0.4; // 半透明
+                this.size = Math.random() * 1.5; 
+                this.speedY = Math.random() * -0.5 - 0.2; 
+                this.opacity = Math.random() * 0.4; 
             }
             update() {
                 this.y += this.speedY;
@@ -365,7 +380,7 @@
 
         function initParticles() {
             particlesArray = [];
-            let numberOfParticles = (canvas.width * canvas.height) / 9000; // 根据屏幕大小决定粒子密度
+            let numberOfParticles = (canvas.width * canvas.height) / 9000; 
             for (let i = 0; i < numberOfParticles; i++) {
                 particlesArray.push(new Particle());
             }
