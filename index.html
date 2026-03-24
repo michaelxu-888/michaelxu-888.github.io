@@ -74,7 +74,7 @@
             background: rgba(20, 20, 25, 0.6);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
-            padding: 45px 30px;
+            padding: 35px 30px; /* 🚨 缩小了上下内边距 */
             border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -91,7 +91,7 @@
         .avatar {
             width: 90px;
             height: 90px;
-            margin: 0 auto 20px auto;
+            margin: 0 auto 15px auto; /* 微调了头像下边距 */
             border-radius: 50%;
             object-fit: cover;
             object-position: center;
@@ -112,7 +112,7 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: 12px;
             color: #a1a1aa;
-            margin-bottom: 30px;
+            margin-bottom: 16px; /* 🚨 缩小了状态灯下方的空间 */
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
@@ -149,7 +149,7 @@
             font-family: 'Space Grotesk', sans-serif;
             color: #94a3b8;
             font-size: 14px;
-            margin: 8px 0 25px 0;
+            margin: 8px 0 12px 0; /* 🚨 缩小了文字下方的空间 */
             font-weight: 400;
             letter-spacing: 1.5px;
         }
@@ -178,8 +178,8 @@
         a {
             font-family: 'Montserrat', sans-serif;
             display: block;
-            margin: 12px 0;
-            padding: 16px;
+            margin: 10px 0; /* 🚨 稍微缩小了按钮之间的间距 */
+            padding: 14px; /* 🚨 稍微压扁了一点点按钮，省出更多空间 */
             color: white;
             text-decoration: none;
             border-radius: 16px;
@@ -204,13 +204,11 @@
         a:hover::after { left: 150%; }
 
         /* 各个按钮的专属涂装 */
-        
-        /* 🚨 修改了这里的联系人按钮样式 🚨 */
         .contact-btn {
-            background: linear-gradient(45deg, #8b5cf6, #d946ef); /* 霓虹紫到紫红的渐变 */
+            background: linear-gradient(45deg, #8b5cf6, #d946ef);
             box-shadow: 0 4px 15px rgba(217, 70, 239, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2); /* 微微的白边增加立体感 */
-            letter-spacing: 2px; /* 字距稍微拉开一点，显得更高级 */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            letter-spacing: 2px;
         }
         
         .ig-btn {
@@ -237,7 +235,7 @@
 
         /* 悬停交互阴影发光 */
         a:hover { transform: translateY(-3px) scale(1.02); }
-        .contact-btn:hover { box-shadow: 0 10px 30px rgba(217, 70, 239, 0.6); } /* 强化悬停时的发光 */
+        .contact-btn:hover { box-shadow: 0 10px 30px rgba(217, 70, 239, 0.6); }
         .ig-btn:hover { box-shadow: 0 10px 30px rgba(220, 39, 67, 0.5); }
         .wa-btn:hover { box-shadow: 0 10px 30px rgba(37, 211, 102, 0.5); }
         .tg-btn:hover { box-shadow: 0 10px 30px rgba(0, 136, 204, 0.5); }
